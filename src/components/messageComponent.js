@@ -82,6 +82,7 @@ class Message extends Component {
                         <Card className="col-12 col-md-5 offset-md-1 mt-3">
                             <Location />
                         </Card>
+
                     </div>
                 </div>
 
