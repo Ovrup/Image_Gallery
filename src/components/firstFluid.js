@@ -12,9 +12,8 @@ class Fluid1 extends Component {
         this.state = {
             items: [],
             loading: true,
-            initialFetch: true,
             hasMore: true,
-            page: 0,
+            page: 1,
             open: false,
             selectedImage: null
         }
@@ -23,22 +22,21 @@ class Fluid1 extends Component {
     /* componentDidMount method fetch only first set of images & set the states of the component */
 
     componentDidMount() {
+        this.fetchImages();
+    }
 
-
-        if (this.state.initialFetch) {
-            fetch(`https://jsonplaceholder.typicode.com/photos?_page=${this.state.page}&_limit=20`)
-                .then(response => response.json())
-                .then(json => {
-                    this.setState(
-                        {
-                            items: json.concat(this.state.items),
-                            loading: false,
-                            initialFetch: false,
-                            page: this.state.page + 1
-                        }
-                    )
-                })
-        }
+    fetchImages = () => {
+        fetch(`https://jsonplaceholder.typicode.com/photos?_page=${this.state.page}&_limit=20`)
+            .then(response => response.json())
+            .then(json => {
+                this.setState(
+                    {
+                        items: this.state.items.concat(json),
+                        loading: false,
+                        page: this.state.page + 1
+                    }
+                )
+            })
     }
 
     /* fetchMoreData fetches set of 20 images by API call everytime after the previous set of images are rendered */
@@ -50,16 +48,7 @@ class Fluid1 extends Component {
         }
 
         else {
-            fetch(`https://jsonplaceholder.typicode.com/photos?_page=${this.state.page}&_limit=20`) // Passing page number & number of images per page as parameter to API call 
-                .then(response => response.json())
-                .then(json => {
-                    this.setState(
-                        {
-                            items: json.concat(this.state.items), // Concatanating the fetched images to state & updating page number for next API call
-                            page: this.state.page + 1
-                        }
-                    )
-                })
+            this.fetchImages();
         }
 
     };
@@ -130,8 +119,16 @@ class Fluid1 extends Component {
 
                     </InfiniteScroll>
 
-                    <Modal isOpen={open} onClose={() => this.setState({ open: false })} image={selectedImage}
-                        increment={() => this.handleIncrement()} decrement={() => this.handleDecrement()} />
+                    {/* <Modal isOpen={open} onClose={() => this.setState({ open: false })} image={selectedImage}
+                        increment={() => this.handleIncrement()} decrement={() => this.handleDecrement()} /> */}
+
+                    <Modal isOpen={open} onClose={() => this.setState({ open: false })}>
+                        <div className='modal-flex'>
+                            <button onClick={() => this.handleDecrement()} className='modal-dec'>&#9665;</button>
+                            <img src={selectedImage?.url} alt={selectedImage?.title} />
+                            <button onClick={() => this.handleIncrement()} className='modal-inc'>&#9655;</button>
+                        </div>
+                    </Modal>
 
                 </div>
 

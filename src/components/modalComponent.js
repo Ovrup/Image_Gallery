@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { Children } from 'react';
 
 // Modal component to display a modal when an image is clicked 
 
-function Modal({ isOpen, onClose, image, increment, decrement }) {
+function Modal({ isOpen, onClose, children }) {
 
     if (!isOpen) return null
     return (
@@ -12,17 +12,13 @@ function Modal({ isOpen, onClose, image, increment, decrement }) {
             left: '0',
             right: '0',
             bottom: '0',
-            background: "grey",
+            background: "black",
             opacity: 0.95,
 
 
         }}>
             <button onClick={onClose}>&times;</button>
-            <div className='modal-flex'>
-                <button onClick={() => decrement()} className='modal-dec'>&#9665;</button>
-                <img src={image.url} alt={image.title} />
-                <button onClick={() => increment()} className='modal-inc'>&#9655;</button>
-            </div>
+            {children}
 
         </div>
     )

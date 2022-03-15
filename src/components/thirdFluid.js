@@ -134,9 +134,13 @@ class Fluid3 extends Component {
 
                     </InfiniteScroll>
 
-                    <Modal isOpen={open} onClose={() => this.setState({ open: false })} image={selectedImage}
-                        increment={() => this.handleIncrement()} decrement={() => this.handleDecrement()} />
-
+                    <Modal isOpen={open} onClose={() => this.setState({ open: false })}>
+                        <div className='modal-flex'>
+                            <button onClick={() => this.handleDecrement()} className='modal-dec'>&#9665;</button>
+                            <img src={selectedImage?.url} alt={selectedImage?.title} />
+                            <button onClick={() => this.handleIncrement()} className='modal-inc'>&#9655;</button>
+                        </div>
+                    </Modal>
                 </div>
 
 
