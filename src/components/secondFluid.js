@@ -24,20 +24,23 @@ class Fluid2 extends Component {
 
     componentDidMount() {
 
-        if (this.state.initialFetch) {
-            fetch(`https://jsonplaceholder.typicode.com/photos?_page=${this.state.page}&_limit=20`)
-                .then(response => response.json())
-                .then(json => {
-                    this.setState(
-                        {
-                            items: json.concat(this.state.items),
-                            loading: false,
-                            initialFetch: false,
-                            page: this.state.page + 1
-                        }
-                    )
-                })
-        }
+        this.fetchImages();
+    }
+
+    fetchImages = () => {
+
+        const { items, loading, hasMore, page, open, selectedImage } = this.state;
+        fetch(`https://jsonplaceholder.typicode.com/photos?_page=${this.state.page}&_limit=20`)
+            .then(response => response.json())
+            .then(json => {
+                this.setState(
+                    {
+                        items: items.concat(json),
+                        loading: false,
+                        page: page + 1
+                    }
+                )
+            })
     }
 
 
@@ -50,19 +53,10 @@ class Fluid2 extends Component {
         }
 
         else {
-            fetch(`https://jsonplaceholder.typicode.com/photos?_page=${this.state.page}&_limit=20`)
-                .then(response => response.json())
-                .then(json => {
-                    this.setState(
-                        {
-                            items: json.concat(this.state.items),
-                            page: this.state.page + 1
-                        }
-                    )
-                })
+            this.fetchImages();
         }
 
-    };
+    }
 
 
     // handleModal function stores the image that is clicked & opened as modal
@@ -78,15 +72,16 @@ class Fluid2 extends Component {
     // Function to display the previous image when the arrows on modal is clicked
 
     handleDecrement = () => {
-        if (this.state.selectedImage.id !== 1) {
+        const { items, loading, hasMore, page, open, selectedImage } = this.state;
+        if (selectedImage.id !== 1) {
             this.setState({
-                selectedImage: this.state.items.filter((item) => item.id === (this.state.selectedImage.id - 1))[0]
+                selectedImage: items.filter((item) => item.id === (selectedImage.id - 1))[0]
             })
         }
         else {
             this.setState(
                 {
-                    selectedImage: this.state.items.filter((item) => item.id === this.state.items.length)[0]
+                    selectedImage: items.filter((item) => item.id === items.length)[0]
                 }
             )
 
@@ -97,9 +92,11 @@ class Fluid2 extends Component {
     // Function to display the next image when the arrows on modal is clicked
 
     handleIncrement = () => {
-        if (this.state.selectedImage.id !== this.state.items.length) {
+        const { items, loading, hasMore, page, open, selectedImage } = this.state;
+
+        if (selectedImage.id !== items.length) {
             this.setState({
-                selectedImage: this.state.items.filter((item) => item.id === (this.state.selectedImage.id + 1))[0]
+                selectedImage: items.filter((item) => item.id === (selectedImage.id + 1))[0]
             })
         }
         else {

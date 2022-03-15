@@ -87,6 +87,10 @@
     padding: 0px 10px 0px 10px
   }
 
+  .image-count {
+    color: white
+  }
+
 .footer {
   display: flex;
   align-items: center;
@@ -114,5 +118,7 @@
 .modal-dec, .modal-inc {
   cursor: pointer
 }
+
+
 
   

@@ -26,14 +26,16 @@ class Fluid1 extends Component {
     }
 
     fetchImages = () => {
+
+        const { items, loading, hasMore, page, open, selectedImage } = this.state;
         fetch(`https://jsonplaceholder.typicode.com/photos?_page=${this.state.page}&_limit=20`)
             .then(response => response.json())
             .then(json => {
                 this.setState(
                     {
-                        items: this.state.items.concat(json),
+                        items: items.concat(json),
                         loading: false,
-                        page: this.state.page + 1
+                        page: page + 1
                     }
                 )
             })
@@ -42,7 +44,9 @@ class Fluid1 extends Component {
     /* fetchMoreData fetches set of 20 images by API call everytime after the previous set of images are rendered */
 
     fetchMoreData = () => {
-        if (this.state.items.length >= 5000) {
+        const { items, hasMore } = this.state;
+
+        if (items.length >= 5000) {
             this.setState({ hasMore: false });
             return;
         }
@@ -64,15 +68,18 @@ class Fluid1 extends Component {
     // Function to display the previous image when the arrows on modal is clicked
 
     handleDecrement = () => {
-        if (this.state.selectedImage.id !== 1) {
+
+        const { items, loading, hasMore, page, open, selectedImage } = this.state;
+
+        if (selectedImage.id !== 1) {
             this.setState({
-                selectedImage: this.state.items.filter((item) => item.id === (this.state.selectedImage.id - 1))[0]
+                selectedImage: items.filter((item) => item.id === (selectedImage.id - 1))[0]
             })
         }
         else {
             this.setState(
                 {
-                    selectedImage: this.state.items.filter((item) => item.id === this.state.items.length)[0]
+                    selectedImage: items.filter((item) => item.id === items.length)[0]
                 }
             )
 
@@ -82,14 +89,17 @@ class Fluid1 extends Component {
     // Function to display the next image when the arrows on modal is clicked
 
     handleIncrement = () => {
-        if (this.state.selectedImage.id !== this.state.items.length) {
+
+        const { items, loading, hasMore, page, open, selectedImage } = this.state;
+
+        if (selectedImage.id !== items.length) {
             this.setState({
-                selectedImage: this.state.items.filter((item) => item.id === (this.state.selectedImage.id + 1))[0]
+                selectedImage: items.filter((item) => item.id === (selectedImage.id + 1))[0]
             })
         }
         else {
             this.setState({
-                selectedImage: this.state.items[0]
+                selectedImage: items[0]
             })
         }
 

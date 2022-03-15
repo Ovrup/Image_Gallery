@@ -7,6 +7,7 @@ import Fluid3 from './thirdFluid';
 import Column from './columnsComponent';
 import Message from './messageComponent';
 
+// Main component that mounts all child components & uses react router to navigate between different components
 
 function Main() {
     return (
