@@ -5,7 +5,6 @@ import { Link } from 'react-router-dom';
 
 function Header() {
     return (
-
         <div className='flex-container'>
             <div className='gallery'><i className='fa fa-image fa-lg'></i> FLUID GALLERY</div>
             <Link to='/fluid1' className='fluid fluid1-hover'><div>1st Fluid</div></Link>

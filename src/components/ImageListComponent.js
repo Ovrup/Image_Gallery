@@ -18,20 +18,16 @@ function RenderImage({ image, onClick }) {
 }
 
 function ImageListComponent(props) {
+    const { images, onClick } = props;
 
-    const menu = props.images.map((image) => {
+    const menu = images.map((image) => {
         return (
-
-            <div key={image.id}>
-                <RenderImage image={image} onClick={props.onClick} />
-            </div>
-
+            <RenderImage key={image.id} image={image} onClick={onClick} />
         )
     });
     return (
         <div className='flex-image'>
             {menu}
-
         </div>
     )
 }

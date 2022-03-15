@@ -11,9 +11,8 @@ import Message from './messageComponent';
 
 function Main() {
     return (
-        <div>
+        <>
             <Header />
-
             <Routes>
                 <Route exact path='/fluid1' element={<Fluid1 />} />
                 <Route exact path='/fluid2' element={<Fluid2 />} />
@@ -22,7 +21,7 @@ function Main() {
                 <Route path='/message' element={<Message />} />
                 <Route path='/' element={<Navigate replace to='/fluid1' />} />
             </Routes>
-        </div>
+        </>
     );
 }
 
